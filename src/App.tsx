@@ -1,22 +1,27 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import React from 'react';
+import Filter from "./components/Filter";
+import AddTodo from "./components/AddTodo";
+import TodoList from "./components/TodoList";
+import Layout from "./components/Layout";
 
-import { Navbar } from './components/Navbar'
-import { About } from './pages/About'
-import { Home } from './pages/Home'
+import {useFilter} from "./hooks/useFilter";
+
+
 
 const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <div className="container">
-        <Switch>
-          <Route path="/" component={Home} exact />
-          <Route path="/about" component={About} />
-        </Switch>
-      </div>
-    </BrowserRouter>
-  )
+    const {changeFilterHandler, changeSortHandler, todos} = useFilter()
+    return (
+        <Layout>
+            <AddTodo />
+            <hr className="my-4"/>
+            <Filter
+                changeSortHandler={changeSortHandler}
+                changeFilterHandler={changeFilterHandler}
+            />
+            <TodoList todos={todos}/>
+        </Layout>
+    );
 }
 
-export default App
+export default App;
+
